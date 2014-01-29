@@ -1,0 +1,14 @@
+{
+  "name": "parse.js",
+  "version": "0.0.1",
+  "description": "Parse strings for patterns.",
+  "main": "parse.js",
+  "directories": {
+    "test": "test"
+  },
+  "author": "Adam Thorpe",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "~2.4.1"
+  }
+}
