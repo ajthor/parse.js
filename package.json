@@ -1,5 +1,5 @@
 {
-  "name": "parse.js",
+  "name": "parsejs",
   "version": "0.0.1",
   "description": "Parse strings for patterns.",
   "main": "parse.js",
