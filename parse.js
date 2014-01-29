@@ -1,5 +1,4 @@
 var _ = require("lodash");
-var collection = require("../collection/collection.js");
 
 var parse = module.exports = function(args) {
 	if(!(this instanceof parse)) return new parse(args);
@@ -22,14 +21,6 @@ _.extend(parse.prototype, {
 
 	contains: function(item) {
 		return !!(this.working.indexOf(item) !== -1);
-	},
-
-	toCollection: function() {
-		var result = new collection(String);
-		this.working.forEach(function(item) {
-			result.add(new String(item));
-		});
-		return result;
 	},
 
 	_make: function(args) {
