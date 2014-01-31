@@ -44,7 +44,7 @@ prefixes = exports.prefixes = function(cb) {
 };
 
 suffixes = exports.suffixes = function(cb) {
-	var exp = rx().word().generate();
+	var exp = rx().word().generate("g");
 	var result = [];
 	this.working.forEach(function(item) {
 		var matches = item.match(exp);
@@ -61,12 +61,39 @@ suffixes = exports.suffixes = function(cb) {
 	return this._make(result);
 };
 
+clusters = exports.clusters = function(cb) {
+	var exp = rx().word().generate("g");
+	var result = [];
+	this.working.forEach(function(item) {
+		var matches = item.match(exp);
+		matches.forEach(function(word) {
+			this.suffixes(function(suffix) {
+				result.push(suffix);
+			});
+			this.reset();
+			this.prefixes(function(prefix) {
+				result.push(prefix);
+			});
+			this.suffixes(function(suffix) {
+				result.push(suffix);
+			});
+
+			result.forEach(function(item) {
+				if(cb) cb(item);
+			});
+		}, this);
+	}, this);
+	this.working = result;
+	return this._make(result);
+};
+
 unique = exports.unique = function(cb) {
 	var words = this.words().working;
 	var result = _.uniq(words, function(word) {return word.toLowerCase();});
 	result.forEach(function(item) {
 		if(cb) cb(item);
 	});
+	this.working = result;
 	return this._make(result);
 };
 
@@ -89,6 +116,7 @@ shared = exports.shared = function(cb) {
 		}
 	});
 
+	this.working = result;
 	return this._make(result);
 };
 
@@ -103,6 +131,8 @@ stem = exports.stem = function(cb) {
 	if(!(result.length > 3)) {
 		return null;
 	}
+
+	this.working = result;
 	return this._make(result);
 };
 
@@ -158,6 +188,7 @@ significant = exports.significant = function(cb, modifier, len) {
 		if(cb) cb(item);
 	});
 
+	this.working = result;
 	return this._make(result);
 };
 

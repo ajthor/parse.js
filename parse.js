@@ -15,7 +15,7 @@ _.extend(parse.prototype, {
 	get: function(id) {return this.working;},
 
 	reset: function() {
-		if(this.previous) this._raw = this.previous._raw;
+		// if(this.previous) this._raw = this.previous._raw;
 		this.working = this._raw;
 	},
 
