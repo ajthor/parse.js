@@ -1,4 +1,5 @@
 var _ = require("lodash");
+var rx = require("rxjs");
 
 pattern = exports.pattern = function(rx, cb) {
 	if(!rx) return void 0;
@@ -15,20 +16,20 @@ pattern = exports.pattern = function(rx, cb) {
 };
 
 sentences = exports.sentences = function(cb) {
-	var rx = /[\S][^\.!\?]+[\.!\?\"]+/g;
-	return this.pattern(rx, cb);
+	var exp = rx().characters(rx().S()).characters(rx().except("\\.!\\?")).orMore().characters("\\.!\\?\\\"\'").orMore();
+	return this.pattern(exp.generate("g"), cb);
 };
 
 words = exports.words = function(cb) {
-	var rx = /\b\S+\b/g;
-	return this.pattern(rx, cb);
+	var exp = rx().word();///\b\S+\b/g;
+	return this.pattern(exp.generate("g"), cb);
 };
 
 prefixes = exports.prefixes = function(cb) {
-	var rx = /\b\w+\b/gi;
+	var exp = rx().word().generate("g");
 	var result = [];
 	this.working.forEach(function(item) {
-		var matches = item.match(rx);
+		var matches = item.match(exp);
 		matches.forEach(function(word) {
 			for(var i = 0, len = word.length; i < len-1; i++) {
 				// Remove last letter.
@@ -43,10 +44,10 @@ prefixes = exports.prefixes = function(cb) {
 };
 
 suffixes = exports.suffixes = function(cb) {
-	var rx = /\b\w+\b/gi;
+	var exp = rx().word().generate();
 	var result = [];
 	this.working.forEach(function(item) {
-		var matches = item.match(rx);
+		var matches = item.match(exp);
 		matches.forEach(function(word) {
 			for(var i = 0, len = word.length; i < len-1; i++) {
 				// Remove last letter.

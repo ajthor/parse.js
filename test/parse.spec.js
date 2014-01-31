@@ -11,26 +11,14 @@ describe("parse", function() {
 
 	it("instantiation should work", function() {
 		expect(function() {
-			// var instance = new parse("Hello there!!   My name is R2D2... \"What is your name?\" \"C3PO!\"");
-			// instance.iterate();
+			var instance = new parse("Hello there!!   My name is R2D2... \"What is your name?\" \"C3PO!\"");
 		}).not.toThrow();
 
 	});
 
 	it("instantiation should work", function() {
-		// var text = "Hello there!!   My name is R2D2... \"What is your name?\" \"Googledy C3PO!\"";
 
-		// var instance = new parse(lipsum);
-
-		// var c = instance.unique().suffixes(function(item) {
-		// 	console.log(item);
-		// });
-
-		// console.log(lipsum);
-
-		var c = parse(lipsum).words().significant();
-
-		// expect(c.contains('um')).not.toBe(false);
+		var c = parse(lipsum).sentences();
 
 	});
 

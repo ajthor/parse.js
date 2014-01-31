@@ -9,6 +9,24 @@
   "author": "Adam Thorpe",
   "license": "MIT",
   "dependencies": {
-    "lodash": "~2.4.1"
-  }
+    "lodash": "~2.4.1",
+    "rx": "git://github.com/ajthor/rx.js.git"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ajthor/parse.js.git"
+  },
+  "keywords": [
+    "parse",
+    "strings",
+    "pattern"
+  ],
+  "bugs": {
+    "url": "https://github.com/ajthor/parse.js/issues"
+  },
+  "homepage": "https://github.com/ajthor/parse.js"
 }
