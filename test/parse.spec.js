@@ -18,7 +18,7 @@ describe("parse", function() {
 
 	it("instantiation should work", function() {
 
-		var c = parse(lipsum).sentences();
+		var c = parse("lipsum").clusters();
 
 	});
 

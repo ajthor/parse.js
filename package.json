@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "~2.4.1",
-    "rx": "git://github.com/ajthor/rx.js.git"
+    "rxjs": "git://github.com/ajthor/rx.js.git"
   },
   "devDependencies": {},
   "scripts": {
