@@ -122,13 +122,13 @@ shared = exports.shared = function(cb) {
 
 stem = exports.stem = function(cb) {
 	var result = "";
-	this.working.prefixes().shared(function(item) {
-		if(item.length > root.length) {
+	this.prefixes().shared(function(item) {
+		if(item.length > result.length) {
 			result = item;
 		}
 	});
 	// Should be a significant length.
-	if(!(result.length > 3)) {
+	if(!(result.length > 2)) {
 		return null;
 	}
 
