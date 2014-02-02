@@ -128,7 +128,7 @@ stem = exports.stem = function(cb) {
 		}
 	});
 	// Should be a significant length.
-	if(!(result.length > 2)) {
+	if(!(result.length > 1)) {
 		return null;
 	}
 
