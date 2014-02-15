@@ -5,7 +5,7 @@ describe("ann", function() {
 
 	it("should load without throwing", function() {
 		expect(function() {
-			ann = require("../ann.js");
+			ann = require("../test.js");
 		}).not.toThrow();
 	});
 
@@ -13,7 +13,8 @@ describe("ann", function() {
 
 		var a = new ann();
 
-		a.parse(["lorem", "ipsum", "dolor", "sit", "amet", "Lorem"]);
+		// a.parse(["lorem", "ipsum", "dolor", "sit", "amet", "Lorem"]);
+		a.parse("lorem");
 
 	});
 
