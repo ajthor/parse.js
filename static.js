@@ -1,7 +1,7 @@
 var _ = require("lodash");
 var rx = require("rxjs");
 
-pattern = exports.pattern = function(rx, cb) {
+var pattern = exports.pattern = function(rx, cb) {
 	if(!rx) return void 0;
 	var result = [];
 	this.working.forEach(function(item) {
@@ -15,17 +15,17 @@ pattern = exports.pattern = function(rx, cb) {
 	return this._make(result);
 };
 
-sentences = exports.sentences = function(cb) {
+var sentences = exports.sentences = function(cb) {
 	var exp = rx().characters(rx().S()).characters(rx().except("\\.!\\?")).orMore().characters("\\.!\\?\\\"\'").orMore();
 	return this.pattern(exp.generate("g"), cb);
 };
 
-words = exports.words = function(cb) {
+var words = exports.words = function(cb) {
 	var exp = rx().word();///\b\S+\b/g;
 	return this.pattern(exp.generate("g"), cb);
 };
 
-prefixes = exports.prefixes = function(cb) {
+var prefixes = exports.prefixes = function(cb) {
 	var exp = rx().word().generate("g");
 	var result = [];
 	this.working.forEach(function(item) {
@@ -43,14 +43,14 @@ prefixes = exports.prefixes = function(cb) {
 	return this._make(result);
 };
 
-suffixes = exports.suffixes = function(cb) {
+var suffixes = exports.suffixes = function(cb) {
 	var exp = rx().word().generate("g");
 	var result = [];
 	this.working.forEach(function(item) {
 		var matches = item.match(exp);
 		matches.forEach(function(word) {
 			for(var i = 0, len = word.length; i < len-1; i++) {
-				// Remove last letter.
+				// Remove first letter.
 				word = word.substr(1);
 				if(cb) cb(word);
 				result.push(word);
@@ -61,12 +61,13 @@ suffixes = exports.suffixes = function(cb) {
 	return this._make(result);
 };
 
-clusters = exports.clusters = function(cb) {
+var clusters = exports.clusters = function(cb) {
 	var exp = rx().word().generate("g");
 	var result = [];
 	this.working.forEach(function(item) {
 		var matches = item.match(exp);
 		matches.forEach(function(word) {
+			result.push(word);
 			this.suffixes(function(suffix) {
 				result.push(suffix);
 			});
@@ -87,7 +88,7 @@ clusters = exports.clusters = function(cb) {
 	return this._make(result);
 };
 
-unique = exports.unique = function(cb) {
+var unique = exports.unique = function(cb) {
 	var words = this.words().working;
 	var result = _.uniq(words, function(word) {return word.toLowerCase();});
 	result.forEach(function(item) {
@@ -97,7 +98,7 @@ unique = exports.unique = function(cb) {
 	return this._make(result);
 };
 
-shared = exports.shared = function(cb) {
+var shared = exports.shared = function(cb) {
 	var result = [];
 	var words = this.previous._raw;
 	// Search all items.
@@ -120,23 +121,22 @@ shared = exports.shared = function(cb) {
 	return this._make(result);
 };
 
-stem = exports.stem = function(cb) {
+var stem = exports.stem = function(cb) {
 	var result = "";
-	this.working.prefixes().shared(function(item) {
-		if(item.length > root.length) {
+	this.prefixes().shared(function(item) {
+		if(item.length > result.length) {
 			result = item;
 		}
 	});
 	// Should be a significant length.
-	if(!(result.length > 3)) {
+	if(!(result.length > 1)) {
 		return null;
 	}
 
-	this.working = result;
-	return this._make(result);
+	return result;
 };
 
-significant = exports.significant = function(cb, modifier, len) {
+var significant = exports.significant = function(cb, modifier, len) {
 	if(!modifier) modifier = 2;
 	if(!len) len = 1;
 	var result = [];
